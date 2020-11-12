@@ -1,0 +1,14 @@
+const Discord = require('discord.js');
+const {MessageEmbed} = require('discord.js');
+module.exports={
+    name: '',
+    category: '',
+    description: '',
+    aliases: ['', '', '', ''],
+    usage: 'su ',
+    run: async(bot, message, args)=>{
+
+    }
+}
+
+Invite link :- https://discord.com/oauth2/authorize?client_id=776108939862999051&scope=bot&permissions=1559755895
