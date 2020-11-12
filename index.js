@@ -2,7 +2,6 @@
 const Discord = require('discord.js');
 const { Collection ,Client, MessageEmbed } = require('discord.js');
 const { MessageAttachment } = require("discord.js")
-const express = require('express');
 const db = require('quick.db');
 
 const fs = require('fs');
@@ -18,13 +17,10 @@ const Timeout = new Set();
     require(`./handlers/${handler}`)(bot);
 });
 
-const request = require('request');
-const {MessageCollector} = require('discord.js-collector');
-const path = require('path');
+
 const ms = require('ms')
-const eval = require('././commands/developer/eval');
 const { disconnect } = require('process');
-const filter = m => m.content.includes('discord');
+
 
 const PREFIX = "su ";
 const token = "Nzc2MTA4OTM5ODYyOTk5MDUx.X6wFxg.YbUJFFaZNYbZUlzQjUyQLkL0c_A";
