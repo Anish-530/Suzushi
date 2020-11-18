@@ -8,16 +8,29 @@ module.exports={
     aliases: [],
     usage: 'su afk <reason>',
     run: async(bot, message, args)=>{
-        const status = new db.table("AFKs");
-        let afk = await status.fetch(message.author.id);
-        const embed = new Discord.MessageEmbed().setColor('#2f3136')
-        if(!afk) {
-            embed.setDescription(`**${message.author.tag}** is now AFK.\nReason : ${args.join(' ') ? args.join(' ') : "AFK"}`)
-            status.set(message.author.id, args.join(" ") || `AFK`);
-        } else {
-            embed.setDescription(`You are no longer AFK`);
-            status.delete(message.author.id);
+        try{
+        let reason = args.join(" ");
+        if(reason.toLowerCase().includes(`https://`)) {
+            return message.reply(`You cannot have links in your reason ||Ads 101||`)
         }
-        message.channel.send(embed)
+        if(reason.toLowerCase().includes(`discord.gg`)) {
+            return message.reply(`You cannot have links in your reason ||Ads 101||`)
+        }
+        let afkcheck = db.fetch(`afk_${message.guild.id}_${message.author.id}`);
+        if(!args[0]) {
+            reason = "AFK";
+        }
+        if(afkcheck == null){
+        await db.set(`afk_${message.guild.id}_${message.author.id}`, {
+           tag: message.author.username,
+           reason: reason,
+       })
+       message.channel.send(`I have set your AFK, with reason: ${reason}`).then(m => m.delete({timeout: 5000}))
+    }else{
+       return;
+    }
+}catch(err){
+    console.log(err)
+}
     }
 }

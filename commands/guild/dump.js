@@ -4,10 +4,10 @@ module.exports={
     name: 'dump',
     category: 'guild',
     description: 'Dump the members, of a specific role',
-    aliases: ['roleinfo', 'role', 'ri', 'aboutrole'],
+    aliases: ['dp'],
     usage: 'su dump <role name>',
     run: async(bot, message, args)=>{
-        //will add break embed feature, so that, if the characters are above 2048 chars, the embed breaks
+        if (!message.member.hasPermission(['MANAGE_MESSAGES', 'MANAGE_ROLES'])) return message.reply('You don\'t have the permissions to use this command.\nYou need \`MANAGE_MESSAGES , MANAGE_ROLES\` permissions, to use this command.');
         try{
         const role = message.guild.roles.cache.find(
             (role) => role.name.toLowerCase() === args.join(' ') || role.id === args.join(' ')
@@ -31,10 +31,12 @@ module.exports={
         .setColor(0x2f3136)
         .setThumbnail(message.guild.iconURL({ dynamic: true, format: 'png' }))
         .setDescription(role.members.map((m) => m.user.tag+` - \`${m.user.id}\``).join(`\n`))
+        .setFooter("Suzushi", bot.user.avatarURL())
+        .setTimestamp(new Date())
         console.log(ListEmbed.length)
         //ask dylan about this more
         const splitDescription = splitMessage(ListEmbed.description, {
-            maxLength: 290,
+            maxLength: 2048,
             char: "\n",
             prepend: "",
             append: ""

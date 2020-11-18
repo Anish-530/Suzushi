@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const { Collection ,Client, MessageEmbed } = require('discord.js');
 const { MessageAttachment } = require("discord.js")
 const db = require('quick.db');
-
+const date = new Date();
 const fs = require('fs');
 const bot = new Discord.Client({
     disableEveryone: true
@@ -20,6 +20,8 @@ const Timeout = new Set();
 
 const ms = require('ms')
 const { disconnect } = require('process');
+const { start } = require('repl');
+
 
 
 const PREFIX = "su ";
@@ -28,44 +30,40 @@ const token = "Nzc2MTA4OTM5ODYyOTk5MDUx.X6wFxg.YbUJFFaZNYbZUlzQjUyQLkL0c_A";
 bot.on('ready', () => {
     bot.user.setActivity(`su help`, {type: "LISTENING"});
     console.log(`Hello, I am online on ${bot.guilds.cache.size} servers and serving ${bot.users.cache.size} users`);
+    /*let drops = require('./commands/fun/drop.js')
+    drops.run(bot, Discord)*/
 })
 
-bot.on("error", async(err) => {
-    console.log(err)
-    })
+
+bot.on('guildMemberAdd', member => {
+    let welcanvas = require('./commands/guild/welcomeCard.js')
+    welcanvas.run(bot, Discord, member)
+    let autorol = db.get(`autorole_${member.guild.id}`)
+    if(autorol) {
+        member.roles.add(autorol)
+    }
+    else if(!autorol) return;
+})
+
 bot.on('message', async message => {
+    let afk = await db.fetch(`afk_${message.guild.id}_${message.author.id}`)
+    if(afk !== null){
+      db.delete(`afk_${message.guild.id}_${message.author.id}`);
+      await message.reply(`Welcome back, I have removed your afk.`)
+    }
+    let xd = message.mentions.users.first();
+    if(xd){
+    let id = xd.id;
+    let afkcheck = db.fetch(`afk_${message.guild.id}_${id}`)
+    if(afkcheck !== null){
+       message.reply(`That user is currently AFK with reason: ${afkcheck.reason}`)
+        }
+    }
+
 if(message.author.bot) return;
 if(!message.content.toLowerCase().startsWith(PREFIX)) return;
-if(!message.guild) {
-    const t = new Discord.MessageEmbed()
-    t.setTitle('STOP WHERE YOU ARE! ✋')
-    t.setColor(0xf94343)
-    t.setDescription('🤷‍♀️ | You can\'t use commands inside DMs')
-    t.setTimestamp(new Date())
-    t.setFooter('You may stop using commands in DMs')
-    return message.channel.send(t);
-}
-let afk = new db.table("AFKs")
-    authorStatus = await afk.fetch(message.author.id),
-    mentioned = message.mentions.members.first();
+if(!message.guild) return;
 
-if(mentioned) {
-    let status = await afk.fetch(mentioned.id)
-
-if(status) {
-    const embed = new Discord.MessageEmbed()
-    .setColor('#2f3136')
-    .setDescription(`**${mentioned.user.tag}** is currently AFK: **${status}**`)
-    message.channel.send(embed).then(message => message.delete({ timeout: 10000 }));
-    }
-}
-if(authorStatus) {
-    const embed = new Discord.MessageEmbed()
-    .setColor('#2f3136')
-    .setDescription(`**${message.author.tag}**, I have successfully removed your AFK`)
-    message.channel.send(embed).then(message => message.delete({ timeout: 10000 }));
-    afk.delete(message.author.id)
-}
 
 if(!message.member) message.member = await message.guild.fetchMember(message);
 const args = message.content.slice(PREFIX.length).trim().split(/ +/g);
@@ -93,7 +91,11 @@ if(command){
     command.run(bot, message, args)
 }
 
+
+
 })
+
+
 bot.snipes = new Map();
 bot.on('messageDelete', function(message, channel){
     bot.snipes.set(message.channel.id, {

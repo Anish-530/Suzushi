@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const {MessageEmbed} = require('discord.js');
+const db = require('quick.db');
 module.exports={
     name: '',
     category: '',
@@ -7,8 +8,75 @@ module.exports={
     aliases: ['', '', '', ''],
     usage: 'su ',
     run: async(bot, message, args)=>{
+        try{
 
+        }catch(err){
+            console.log(err);
+            return message.channel.send('Oops, looks like an error occured')
+        }
     }
 }
 
+
+            else if(!reason) {
+                await message.channel.send(`You are warning ${member.user.username}, please provide me a reason, to continue`);
+                await message.channel.awaitMessages(filter, { max: 1, time: 10000000, errors: ['time'] })
+                .then(collected => {
+                    const reasoncol = collected.first().content;
+                    if(warnings === null ) {
+                        db.set(`warnings_${message.guild.id}_${member.id}`, 1)
+                        const warned = new Discord.MessageEmbed()
+                        .setTitle(`<:notgood:776121645709525002> ${member.user.username} were warned successfully. Use \`su warnings (mention them)\` to check their warnings.`)
+                        .setColor(0x2f3136)
+                        .setDescription(`Reason: ${reasoncol}`)
+                        .setTimestamp(new Date())
+                        .setFooter('Suzushi', bot.user.avatarURL())
+                        return message.channel.send(warned);
+                    } else if(warnings !== null) {
+                        db.add(`warnings_${message.guild.id}_${member.id}`, 1)
+                        const warnedb = new Discord.MessageEmbed()
+                        .setTitle(`<:notgood:776121645709525002> ${member.user.username} were warned successfully. Use \`su warnings (mention them)\` to check their warnings.`)
+                        .setColor(0x2f3136)
+                        .setDescription(`Reason: ${reasoncol}`)
+                        .setTimestamp(new Date())
+                        .setFooter('Suzushi', bot.user.avatarURL())
+                        return message.channel.send(warnedb);
+                    }
+                })
+            }
+
 Invite link :- https://discord.com/oauth2/authorize?client_id=776108939862999051&scope=bot&permissions=1559755895
+
+				`**❯ Explicit Filter:** ${filterLevels[message.guild.explicitContentFilter]}`,
+				`**❯ Verification Level:** ${verificationLevels[message.guild.verificationLevel]}`,
+                				`**❯ Owner:** ${message.guild.owner.user.tag} (${message.guild.ownerID})`,
+				`**❯ Region:** ${regions[message.guild.region]}`,
+				`**❯ Boost Tier:** ${message.guild.premiumTier ? `Tier ${message.guild.premiumTier}` : 'None'}`,
+
+				`**❯ Time Created:** ${moment(message.guild.createdTimestamp).format('LT')} ${moment(message.guild.createdTimestamp).format('LL')} ${moment(message.guild.createdTimestamp).fromNow()}`
+
+
+
+                            else if (member) {
+                message.channel.send(`${member}, Do you accept the proposal of ${message.author}? They want to be with you. Respond with \`yes\` if you accept it, else respond with \`no\`, if you deny it.`)
+                message.channel.awaitMessages(filter, { max: 1, time: 9000, errors: ['time'] })
+                .then(async collected => {
+                    if(collected.first().content.toLowerCase() === 'yes') {
+                        db.add(`spouses_${message.guild.id}_${member.id}`, 1)
+                        db.add(`spouses_${message.guild.id}_${message.author.id}`, 1)
+                        db.push(`spouses.marriedto_${message.guild.id}_${message.author.id}`, [
+                            member.user.tag
+                        ])
+                        db.push(`spouses.marriedto_${message.guild.id}_${member.id}`, [
+                            message.author.tag
+                        ])
+                        await message.reply(`Yay!! ${member.user.username} accepted your proposal, and now they are with you.`)
+                    }
+                    else if(collected.first().content.toLowerCase() === 'no') {
+                        message.reply(`It\'s really a bad day for you. Looks like ${member.user.username}, denied your proposal`)
+                    }
+                    else {
+                        message.reply(`It\'s really a bad day for you. Looks like ${member.user.username}, didn\'t respond`)
+                    }
+                }).catch(err => console.log(err))
+            }
