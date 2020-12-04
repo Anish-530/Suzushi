@@ -28,9 +28,9 @@ module.exports={
                     .setColor(0x2f3136)
                     .setDescription(`You have to at least mention or provide the id of the user, whom you want to marry.\n\nExample :
                     \`\`\`fix
-                    su marry <mention a user>
-                            OR
-                    su marry <ID of a user>\`\`\``)
+su marry <mention a user>
+OR
+su marry <ID of a user>\`\`\``)
                     return message.channel.send(error);
                 }
                 if(member.user.bot){

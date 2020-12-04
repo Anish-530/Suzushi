@@ -18,7 +18,7 @@ module.exports={
             .setTitle(`Welcome Channel`)
             .setDescription(`Looks like, the welcome channel for **${message.guild.name}**, is not yet set. To set it, you can simply, do,
             \`\`\`fix
-            su setwelcome <mention a channel>\`\`\``)
+su setwelcome <mention a channel>\`\`\``)
             .setColor('#2f3136')
             .setTimestamp(new Date())
             .setFooter('Suzushi', bot.user.avatarURL())

@@ -14,9 +14,9 @@ module.exports={
             .setColor(0x2f3136)
             .setDescription(`You have to provide me at least, the name or the ID of the role.\n\nExample :
             \`\`\`fix
-            su roleinfo <role name or mention the role>
-                    OR
-            su roleinfo <role ID>\`\`\``)
+su roleinfo <role name or mention the role>
+OR
+su roleinfo <role ID>\`\`\``)
             return message.channel.send(error);
         }
         else if(args.join(' ')){

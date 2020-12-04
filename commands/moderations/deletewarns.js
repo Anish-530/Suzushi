@@ -18,9 +18,9 @@ module.exports={
                 .setColor(0x2f3136)
                 .setDescription(`You have to at least mention or provide the id of the user, whom you are warning.\n\nExample :
                 \`\`\`fix
-                su deletewarns <mention a user>
-                        OR
-                su deletewarns <ID of a user>\`\`\``)
+su deletewarns <mention a user>
+OR
+su deletewarns <ID of a user>\`\`\``)
                 return message.channel.send(error);
             }
             if(member.user.bot) {

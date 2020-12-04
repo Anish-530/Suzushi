@@ -20,9 +20,9 @@ module.exports={
             .setColor(0x2f3136)
             .setDescription(`You have to provide me at least, the name or mention the role.\n\nExample :
             \`\`\`fix
-      su autorole <role name>
-              OR
-      su autorole <mention the role>\`\`\``)
+su autorole <role name>
+OR
+su autorole <mention the role>\`\`\``)
             return message.channel.send(error);
         }
         else if(args[0]){

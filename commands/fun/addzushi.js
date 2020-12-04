@@ -20,9 +20,9 @@ module.exports={
                 .setColor(0x2f3136)
                 .setDescription(`You have to at least mention or provide the id of the user, whos zushis you are resetting.\n\nExample :
                 \`\`\`fix
-                su addzushi <mention a user> <amount>
-                        OR
-                su addzushi <ID of a user> <amount>\`\`\``)
+su addzushi <mention a user> <amount>
+OR
+su addzushi <ID of a user> <amount>\`\`\``)
                 return message.channel.send(error);
             }
              else if(member && amount) {

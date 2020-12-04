@@ -10,13 +10,7 @@ module.exports={
     run: async(bot, message, args)=>{
         try{
             let autorole = db.get(`autorole_${message.guild.id}`)
-            let servrole;
-            if(servrole === undefined){
-                servrole = 'No role specified yet, for Autorole.'
-            } 
-            else if(servrole !== undefined){
-                servrole = message.guild.roles.cache.get(autorole);
-            }
+            let servrole = message.guild.roles.cache.get(autorole);
             let welcome = db.get(`welchannel_${message.guild.id}`)
             let servchannel;
             let warns;

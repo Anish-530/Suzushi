@@ -45,6 +45,11 @@ bot.on('guildMemberAdd', member => {
     else if(!autorol) return;
 })
 
+bot.on('guildMemberRemove', member => {
+    let goodcanvas = require('./commands/guild/goodbyeCard.js')
+    goodcanvas.run(bot, Discord, member)
+})
+
 bot.on('message', async message => {
     let afk = await db.fetch(`afk_${message.guild.id}_${message.author.id}`)
     if(afk !== null){
@@ -56,7 +61,7 @@ bot.on('message', async message => {
     let id = xd.id;
     let afkcheck = db.fetch(`afk_${message.guild.id}_${id}`)
     if(afkcheck !== null){
-       message.reply(`That user is currently AFK with reason: ${afkcheck.reason}`)
+       message.reply(`That user is currently AFK with reason: ${afkcheck.reason}, for ${afkcheck.time}`)
         }
     }
 

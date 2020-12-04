@@ -18,9 +18,9 @@ module.exports={
                 .setColor(0x2f3136)
                 .setDescription(`You have to at least mention or provide the id of the user, whos warnings you are checking.\n\nExample :
                 \`\`\`fix
-                su warnings <mention a user>
-                        OR
-                su warnings <ID of a user>\`\`\``)
+su warnings <mention a user>
+OR
+su warnings <ID of a user>\`\`\``)
                 return message.channel.send(error);
             }
             if(member.user.bot) {

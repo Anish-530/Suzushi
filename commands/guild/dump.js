@@ -18,9 +18,9 @@ module.exports={
             .setColor(0x2f3136)
             .setDescription(`You have to provide me at least, the name or the ID of the role.\n\nExample :
             \`\`\`fix
-            su dump <role name>
-                    OR
-            su dump <role ID>\`\`\``)
+su dump <role name>
+OR
+su dump <role ID>\`\`\``)
             return message.channel.send(error);
         }
         if (!role)

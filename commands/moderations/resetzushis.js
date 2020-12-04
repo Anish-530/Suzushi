@@ -9,6 +9,7 @@ module.exports={
     usage: 'su resetzushis <mention the user or use their user ID>',
     run: async(bot, message, args)=>{
         try{
+            if(!message.member.hasPermission(["MANAGE_GUILD"])) return message.reply("You don\'t have the permission to use this command.\nYou need \`MANAGE_SERVER\` permission, to use this command.");
             let filter = (m) => m.author.id === message.author.id;
             const mentionedddMember11 = message.mentions.users.first() || message.guild.members.cache.get(args[0]);
             const member = message.guild.member(mentionedddMember11);
@@ -18,9 +19,9 @@ module.exports={
                 .setColor(0x2f3136)
                 .setDescription(`You have to at least mention or provide the id of the user, whos zushis you are resetting.\n\nExample :
                 \`\`\`fix
-                su resetzushis <mention a user>
-                        OR
-                su resetzushis <ID of a user>\`\`\``)
+su resetzushis <mention a user>
+OR
+su resetzushis <ID of a user>\`\`\``)
                 return message.channel.send(error);
             }
             else if(member.user.bot){

@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const {MessageEmbed} = require('discord.js');
+const { now } = require('moment');
 const db = require('quick.db')
 module.exports={
     name: 'afk',
@@ -24,6 +25,7 @@ module.exports={
         await db.set(`afk_${message.guild.id}_${message.author.id}`, {
            tag: message.author.username,
            reason: reason,
+           time: new Date().toTimeString()
        })
        message.channel.send(`I have set your AFK, with reason: ${reason}`).then(m => m.delete({timeout: 5000}))
     }else{

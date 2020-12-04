@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const {MessageEmbed} = require('discord.js');
+const db = require('quick.db');
 module.exports={
     name: 'unban',
     category: 'moderation',
@@ -7,6 +8,8 @@ module.exports={
     aliases: [],
     usage: 'su unban <mention the user you want to unban or put their ID here>',
     run: async(bot, message, args)=>{
+        let chx = db.fetch(`unbanlogchannel_${message.guild.id}`);
+        const channel = message.guild.channels.cache.get(chx);
         if(!message.member.hasPermission(["BAN_MEMBERS"])) return message.reply("You don\'t have the permission to use this command.\nYou need \`BAN_MEMBERS\` permission, to use this command.");
         if(!message.member.guild.me.hasPermission(['BAN_MEMBERS'])) return message.reply("I don\'t have the permission to \`UNBAN MEMBERS\`.\nPlease provide me \`BAN_MEMBERS\` permission to use this command")
         if(!args[0]) return message.reply("You need to mention the user, whom you want to **unban**.\nEx: \`hey unban ID-of-the-user-you-want-to-unban\`").then(message => message.delete({ timeout: 10000 }));
@@ -20,7 +23,7 @@ module.exports={
                 .setColor(0x2f3136)
                 .setDescription(`You have to at least mention, or provide me the ID of the member, you want to ban.\n\nExample :
                 \`\`\`fix
-                su unban <user ID>\`\`\``)
+su unban <user ID>\`\`\``)
                 return message.channel.send(error);
             }
         }
@@ -38,13 +41,27 @@ module.exports={
         try {
             message.guild.members.unban(bannedMember, {reason: reason})
             let uban1 = new Discord.MessageEmbed()
-            uban1.setAuthor("Unban command used by " + message.guild.members.cache.get(message.author.id).displayName, message.author.displayAvatarURL({ dynamic: true, format: 'png' }))
-            uban1.setDescription(`\`\`\`${bannedMember.tag} was successfully unbanned 🎉.\nReason why ${bannedMember.tag} was banned : ${reason}\`\`\``)
+            uban1.setAuthor("Unban command used by " + message.author.tag, message.author.displayAvatarURL({ dynamic: true, format: 'png' }))
+            uban1.setDescription(`${bannedMember.tag} was successfully unbanned 🎉\nReason: ${reason}\nUser ID [ ${bannedMember.id} ]`)
             uban1.setColor(0x2ac075)
             uban1.setTimestamp(new Date())
             .setFooter("Suzushi", bot.user.avatarURL())
             message.channel.send(uban1)
             message.react('👍');
+            if(chx != null) {
+                db.get(`banlogcount_${message.guild.id}`)
+                let uban_log_count = db.add(`banlogcount_${message.guild.id}`, 1)
+                let uban_log = new Discord.MessageEmbed()
+                uban_log.setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true, format: 'png' }))
+                uban_log.setDescription(`**Member:** ${bannedMember.tag} - (${bannedMember.id})\n**Action:** Unban\n**Reason:** ${reason}`)
+                uban_log.setColor(0x2ac075)
+                uban_log.setTimestamp(new Date())
+                uban_log.setFooter(`Case #${uban_log_count}`)
+                channel.send(uban_log)
+            }
+            else if(chx === null) {
+                return;
+            }
         } catch(e) {
             if(e)
             message.channel.send('Seems like I was unable to unban that user. You can try again later')

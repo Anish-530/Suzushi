@@ -9,6 +9,7 @@ module.exports={
     usage: 'su dmwarns <on || off>',
     run: async(bot, message, args)=>{
         try{
+            if(!message.member.hasPermission(["MANAGE_GUILD"])) return message.reply("You don\'t have the permission to use this command.\nYou need \`MANAGE_SERVER\` permission, to use this command.");
             db.get(`dmwarns_${message.guild.id}`)
             let choice = args.slice(0).join(' ')
             if(!choice) {
@@ -17,9 +18,9 @@ module.exports={
                 .setColor(0x2f3136)
                 .setDescription(`You have to at least mention or provide the id of the user, whom you are warning.\n\nExample :
                 \`\`\`fix
-                su dmwarns <on>
-                        OR
-                su dmwarns <off>\`\`\``)
+su dmwarns <on>
+OR
+su dmwarns <off>\`\`\``)
                 return message.channel.send(error);
             }
             else if(choice) {

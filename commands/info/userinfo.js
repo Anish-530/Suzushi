@@ -25,21 +25,6 @@ module.exports={
             VERIFIED_BOT: '<:verifiedBot:760775117063716874> Verified Bot',
             VERIFIED_DEVELOPER: '<:developer:760775172599840828> Verified Bot Developer',
         };
-        const keyperms = {
-            ADMINISTRATER: 'Administrater',
-            MANAGE_SERVER: 'Manage Server',
-            MANAGE_ROLES: 'Manage Roles',
-            MANAGE_CHANNELS: 'Manage Channels',
-            KICK_MEMBERS: 'Kick Members',
-            BAN_MEMBERS: 'Ban Members',
-            MANAGE_NICKNAMES: 'Manage Nicknames',
-            MANAGE_EMOJIS: 'Manage Emojis',
-            MANAGE_WEBHOOKS: 'Manage Webhooks',
-            MANAGE_MESSAGES: 'Manage Messages',
-            MOVE_MEMBERS: 'Move Members',
-            MUTE_MEMBERS: 'Mute Members',
-            DEAFEN_MEMBERS: 'Deafen Members',
-        };
         
         const mentionedddMember11 = message.mentions.users.first() || message.guild.members.cache.get(args[0]) || message.author;
         const member = message.guild.member(mentionedddMember11);
