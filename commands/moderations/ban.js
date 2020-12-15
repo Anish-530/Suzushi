@@ -40,6 +40,7 @@ su ban <the ID of an user> <reason>\`\`\``)
         else if (userb) {
             if(!bareason) bareason = "No reason was provided"
             if (memberb) {
+                if(memberb.hasPermission('ADMINISTRATOR', 'MANAGE_SERVER')) return message.channel.send('You can\'t ban a member having higher roles than you.')
                 let uban = new Discord.MessageEmbed()
                 uban.setAuthor("Ban command used by " + message.author.tag, message.author.displayAvatarURL({ dynamic: true, format: 'png' }))
                 uban.setDescription(`${memberb.user.tag} was successfully banned from ${message.guild.name} 🤕.\nReason: ${bareason}\nUser ID [ ${memberb.id} ]`)

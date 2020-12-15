@@ -11,7 +11,7 @@ module.exports={
         try{
             if(!message.member.hasPermission(["MANAGE_ROLES"])) return message.reply("You don\'t have the permission to use this command.\nYou need \`MANAGE_ROLES\` permission, to use this command.");
             if(!message.member.guild.me.hasPermission(['MANAGE_ROLES'])) return reply("I don\'t have the permission to manage roles.\nPlease provide me \`MANAGE_ROLES\` permission to use this command")
-            const mentionedddMember11 = message.mentions.users.first() || message.guild.members.cache.get(args[0]) || message.author;
+            const mentionedddMember11 = message.mentions.users.first() || message.guild.members.cache.get(args[0]);
             const member = message.guild.member(mentionedddMember11);
             let chx = db.get(`mulogschannel_${message.guild.id}`);
             const channel = message.guild.channels.cache.get(chx);
@@ -66,7 +66,15 @@ su mute <provide the ID of the member> [reason]\`\`\``)
             }
         }catch(err){
             console.log(err);
-            return message.channel.send('Oops, looks like an error occured')
+            const errr = new Discord.MessageEmbed()
+            .setTitle(`<:notgood:776121645709525002> Looks like there is an Issue!`)
+            .setColor(0x2f3136)
+            .setDescription(`You have to at least mention or provide me the member\'s ID.\n\nExample :
+            \`\`\`fix
+su mute <mention the member> [reason]
+or
+su mute <provide the ID of the member> [reason]\`\`\``)
+            return message.channel.send(errr);
         }
     }
 }

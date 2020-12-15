@@ -47,7 +47,7 @@ module.exports={
                     else{
                         return message.channel.send('You didn\'t choose the correct option')
                     }
-                })
+                }).catch(err => message.channel.send('Looks like the time expired. You can run the command again.'))
             }
         }catch(err){
             console.log(err);

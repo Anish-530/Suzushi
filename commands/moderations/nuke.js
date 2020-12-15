@@ -12,6 +12,7 @@ module.exports={
             if(!message.member.hasPermission(["MANAGE_CHANNELS"])) return message.reply("You don\'t have the permission to use this command.\nYou need \`MANAGE_CHANNELS\` permission, to use this command.");
             if(!message.member.guild.me.hasPermission(["MANAGE_CHANNELS"])) return message.reply("You don\'t have the permission to use this command.\nYou need \`MANAGE_CHANNELS\` permission, to use this command.");
             const nukeChannel = message.channel;
+            db.set(`nuked_${message.guild.id}`, message.channel.name)
             if(!nukeChannel.deletable) {
                 let mebed = new Discord.MessageEmbed()
                 .setTitle('<:notgood:776121645709525002> Looks like this channel is not deleteable. So, I can\'t nuke this channel.')

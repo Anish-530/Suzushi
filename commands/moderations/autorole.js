@@ -22,7 +22,9 @@ module.exports={
             \`\`\`fix
 su autorole <role name>
 OR
-su autorole <mention the role>\`\`\``)
+su autorole <mention the role>
+OR
+su autorole <provide the role\'s ID>\`\`\``)
             return message.channel.send(error);
         }
         else if(args[0]){
@@ -39,11 +41,13 @@ su autorole <mention the role>\`\`\``)
             const error = new Discord.MessageEmbed()
             .setTitle(`<:notgood:776121645709525002> Looks like there is an Issue!`)
             .setColor(0x2f3136)
-            .setDescription(`You have to provide me at least, the name or mention the role.\n\nExample :
+            .setDescription(`You have to provide me at least, the name or mention the role or provide the role\'s ID.\n\nExample :
             \`\`\`fix
-      su autorole <role name>
-              OR
-      su autorole <mention the role>\`\`\``)
+su autorole <role name>
+OR
+su autorole <mention the role>
+OR
+su autorole <provide the role\'s ID>\`\`\``)
             return message.channel.send(error);
         }
     }

@@ -2,16 +2,16 @@ const Discord = require('discord.js');
 const {MessageEmbed} = require('discord.js');
 const db = require('quick.db');
 module.exports={
-    name: 'test',
-    category: '',
-    description: '',
-    aliases: ['', '', '', ''],
-    usage: 'su ',
+    name: 'fetchbans',
+    category: 'moderations',
+    description: 'Fetches the number of bans of a guild',
+    aliases: ['fb','bans'],
+    usage: 'su fetchbans',
     run: async(bot, message, args)=>{
         try{
-            const damn = args.slice(0).join(' ')
+            const banList = await message.guild.fetchBans();
             let em = new Discord.MessageEmbed()
-            .setImage(damn)
+            .setTitle(`<:notgood:776121645709525002> Total number banned members of ${message.guild.name}: \`${banList.size}\``)
             .setColor('#2f3136')
             message.channel.send(em)
         }catch(err){

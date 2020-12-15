@@ -27,7 +27,7 @@ module.exports={
            reason: reason,
            time: new Date().toTimeString()
        })
-       message.channel.send(`I have set your AFK, with reason: ${reason}`).then(m => m.delete({timeout: 5000}))
+       message.reply(`I have set your AFK, with reason: ${reason}`).then(m => m.delete({timeout: 5000}))
     }else{
        return;
     }

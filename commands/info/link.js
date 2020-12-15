@@ -1,18 +1,21 @@
 const Discord = require('discord.js');
 const {MessageEmbed} = require('discord.js');
+const request = require('node-superfetch')
 const db = require('quick.db');
 module.exports={
-    name: 'test',
-    category: '',
-    description: '',
-    aliases: ['', '', '', ''],
-    usage: 'su ',
+    name: 'link',
+    category: 'info',
+    description: 'Get the link of any image',
+    aliases: [],
+    usage: 'su link <image>',
     run: async(bot, message, args)=>{
         try{
-            const damn = args.slice(0).join(' ')
+            let attach = args[0]
+            //message.channel.send(`\`${attach.proxyURL}\``)
+            //message.channel.send(`\`${attach.url}\``)
             let em = new Discord.MessageEmbed()
-            .setImage(damn)
-            .setColor('#2f3136')
+            em.setImage(attach.url)
+            em.setColor('#2f3136')
             message.channel.send(em)
         }catch(err){
             console.log(err);

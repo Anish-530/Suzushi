@@ -12,9 +12,9 @@ module.exports={
         try{
             if(!message.member.hasPermission(["MANAGE_ROLES"])) return message.reply("You don\'t have the permission to use this command.\nYou need \`MANAGE_ROLES\` permission, to use this command.");
             const muterole = message.guild.roles.cache.find(
-                (role) => role.name.toLowerCase() === args.slice(1).join(' ').toLowerCase() || role.id === args.slice(1).join(' ')
-            ) || message.mentions.roles.last();
-            if(!muterole) {
+                (role) => role.name.toLowerCase() === args.join(' ').toLowerCase() || role.id === args.join(' ')
+            ) || message.mentions.roles.first();
+            if(!args[0] || !muterole) {
                 const error = new Discord.MessageEmbed()
                 .setTitle(`<:notgood:776121645709525002> Looks like there is an Issue!`)
                 .setColor(0x2f3136)

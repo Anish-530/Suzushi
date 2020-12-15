@@ -50,10 +50,10 @@ su ban <the ID of an user> <number of days for ban> [reason]\`\`\``)
                 });
 
             } else {
-                message.reply("The user isn\'t in this server").then(message => message.delete({ timeout: 5000 }));
+                message.reply("The user isn\'t in this server").then(message => message.delete({ timeout: 10000 }));
             }
         } else {
-            message.reply('That user is not in the server :( ').then(message => message.delete({ timeout: 5000 }));
+            message.reply('That user is not in the server :( ').then(message => message.delete({ timeout: 10000 }));
         }
         if(chx != null) {
             db.get(`banlogcount_${message.guild.id}`)
