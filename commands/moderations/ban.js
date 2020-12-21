@@ -49,7 +49,7 @@ su ban <the ID of an user> <reason>\`\`\``)
                 uban.setFooter("Suzushi", bot.user.avatarURL())
                 await message.channel.send(uban);
                 await message.react('👍');
-                await bot.guilds.resolve(guildID).members.resolve(userb).ban({reason: bareason}).then(async () => {
+                await bot.guilds.resolve(guildID).members.resolve(userb).ban({days: 7, reason: bareason}).then(async () => {
                 }).catch(err => {
                     message.channel.send('Seems like, I was unable to ban that user. You can try again later')
                     message.react('👎');

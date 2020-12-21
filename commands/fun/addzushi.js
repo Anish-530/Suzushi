@@ -10,6 +10,7 @@ module.exports={
     aliases: ['addzs'],
     usage: 'su addzushi <mention a user or user ID> <amount of zushi you want to add>',
     run: async(bot, message, args)=>{
+        if(message.author.id !== "671355502399193128") return;
         let amount = args.slice(1).join(' ')
         const mentionedddMember11 = message.mentions.users.first() || message.guild.members.cache.get(args[0]) || message.author;
         const member = message.guild.member(mentionedddMember11);

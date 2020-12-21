@@ -34,6 +34,8 @@ module.exports={
             }
             else if(member.user) {
                 let money = db.fetch(`money_${message.guild.id}_${member.id}`)
+                let limit = '300';
+                if(money >= 13) limit = '500';
                 if(money === null) money = 0
                 const embed = new Discord.MessageEmbed()
                 embed.setColor('#2f3136')
@@ -49,7 +51,7 @@ module.exports={
                 else if(statuser === "idle"){
                     embed.setTitle(`<:statusIdle:733765872275161219> ${member.user.tag}'s Zushi`)
                 }
-                embed.setDescription(`${money}/300 zushis`)
+                embed.setDescription(`${money}/${limit} zushis`)
                 return message.channel.send(embed)
             }
             

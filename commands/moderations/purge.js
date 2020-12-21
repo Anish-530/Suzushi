@@ -8,6 +8,8 @@ module.exports={
     aliases: ['clear', 'del'],
     usage: 'su purge <amount>',
     run: async(bot, message, args)=>{
+        if (!message.member.hasPermission(['MANAGE_MESSAGES'])) return message.reply('You don\'t have the permission to use this command.\nYou need \`BAN_MEMBERS\` permission, to use this command.');
+        if(!message.member.guild.me.hasPermission(['MANAGE_MESSAGES'])) return message.reply("I don\'t have the permission to \`BAN_MEMBERS\`.\nPlease provide me the following permission to use this command") 
         //make this completely
         try{
         const user = message.mentions.users.first();

@@ -7,7 +7,7 @@ module.exports={
     aliases: ['dp'],
     usage: 'su dump <role name>',
     run: async(bot, message, args)=>{
-        if (!message.member.hasPermission(['MANAGE_MESSAGES', 'MANAGE_ROLES'])) return message.reply('You don\'t have the permissions to use this command.\nYou need \`MANAGE_MESSAGES , MANAGE_ROLES\` permissions, to use this command.');
+        if (!message.member.hasPermission(['MANAGE_ROLES'])) return message.reply('You don\'t have the permissions to use this command.\nYou need \`MANAGE_ROLES\` permissions, to use this command.');
         try{
         const role = message.guild.roles.cache.find(
             (role) => role.name.toLowerCase() === args.join(' ') || role.id === args.join(' ')

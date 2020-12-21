@@ -25,7 +25,14 @@ module.exports={
                 .setTitle(`<:good:776121655528783964> Congratulations, you have collcted ${amount} zushi.`)
                 message.channel.send(coll)
                 db.add(`money_${message.guild.id}_${message.author.id}`, amount)
+                let amt = db.get(`money_${message.guild.id}_${message.author.id}`)
                 db.set(`daily_${message.guild.id}_${message.author.id}`, Date.now())
+                if(amt >= 13){
+                    message.reply('Yay, you have crossed 13 zushis')
+                }
+                else{
+                    return;
+                }
             }
         }catch(err){
             console.log(err);

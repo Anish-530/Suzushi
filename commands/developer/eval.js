@@ -11,7 +11,7 @@ module.exports={
       if (message.author.id !== "671355502399193128") return;
   
       const embed = new Discord.MessageEmbed()
-      .setTitle("Success")
+      .setTitle("<:good:776121655528783964> Success <:good:776121655528783964>")
       .addField("Input", "```xl\n" + args.join(" ") + "```");
       
       try {
@@ -41,10 +41,10 @@ module.exports={
         if (err.length > 2048) {
           // Do the same like above if the error output was more than 1024 characters.
           const {body} = await post("https://hastebin.com/documents").send(err);
-          embed.addField("Output", `https://hastebin.com/${body.key}.js`).setColor("RED");
+          embed.addField("Output", `https://hastebin.com/${body.key}.js`).setColor("#2f3136");
         } else {
-          embed.setTitle("Error")
-          embed.addField("Output", "```js\n" + err + "```").setColor("RED");
+          embed.setTitle("<:notgood:776121645709525002> Error <:notgood:776121645709525002>")
+          embed.addField("Output", "```js\n" + err + "```").setColor("#2f3136");
         }
         
         message.channel.send(embed);

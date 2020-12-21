@@ -25,7 +25,7 @@ const { start } = require('repl');
 
 
 const PREFIX = "su ";
-const token = "Nzc2MTA4OTM5ODYyOTk5MDUx.X6wFxg.YbUJFFaZNYbZUlzQjUyQLkL0c_A";
+
 
 bot.on('ready', () => {
     bot.user.setActivity(`su help`, {type: "LISTENING"});
@@ -119,4 +119,4 @@ bot.on('messageUpdate', function(message,channel){
 
 
 
-bot.login(token);
+bot.login(process.env.token);

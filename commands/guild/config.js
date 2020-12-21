@@ -10,6 +10,7 @@ module.exports={
     usage: 'su config',
     run: async(bot, message, args)=>{
         try{
+            if (!message.member.hasPermission(['MANAGE_GUILD'])) return message.reply('You don\'t have the permission to use this command.\nYou need \`MANAGE_SERVER\` permission, to use this command.'); 
             let autorole = db.get(`autorole_${message.guild.id}`)
             let servrole;
             let welcome = db.get(`welchannel_${message.guild.id}`)
