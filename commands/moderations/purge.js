@@ -4,28 +4,34 @@ const db = require('quick.db');
 module.exports={
     name: 'purge',
     category: 'moderations',
-    description: 'Purge messages',
+    description: 'Purge specific amount of messages from everyone, or from a specific user.',
     aliases: ['clear', 'del'],
-    usage: 'su purge <amount>',
+    usage: 'su purge [mention user] <amount>',
     run: async(bot, message, args)=>{
-        if (!message.member.hasPermission(['MANAGE_MESSAGES'])) return message.reply('You don\'t have the permission to use this command.\nYou need \`BAN_MEMBERS\` permission, to use this command.');
-        if(!message.member.guild.me.hasPermission(['MANAGE_MESSAGES'])) return message.reply("I don\'t have the permission to \`BAN_MEMBERS\`.\nPlease provide me the following permission to use this command") 
-        //make this completely
+        if (!message.member.hasPermission(['MANAGE_MESSAGES'])) return message.reply('You don\'t have the permission to use this command.\nYou need \`MANAGE_MESSAGES\` permission, to use this command.');
+        if(!message.member.guild.me.hasPermission(['MANAGE_MESSAGES'])) return message.reply("I don\'t have the permission to \`MANAGE_MESSAGES\`.\nPlease provide me the following permission to use this command") 
         try{
         const user = message.mentions.users.first();
-        // Parse Amount
-        const amount = parseInt(message.content.split(' ')[1]) ? parseInt(message.content.split(' ')[1]) : parseInt(message.content.split(' ')[2])
-        if (!amount) return message.reply('Must specify an amount to delete!');
-        if (!amount && !user) return message.reply('Must specify a user and amount, or just an amount, of messages to purge!');
+        let amount = args[0];
+        if (!amount) return message.reply('Please specify an amount to delete');
+        if (!user && !amount) return message.reply('Must specify a user and amount, or just an amount, of messages to purge!');
         // Fetch 100 messages (will be filtered and lowered up to max amount requested)
         message.channel.messages.fetch({
         limit: 100,
-        }).then((messages) => {
+        }).then(async (messages) => {
         if (user) {
+        amount = args[1];
+        if(isNaN(amount)) return message.reply('That doesn\'t seem like a number. Please enter a number.')
         const filterBy = user ? user.id : bot.user.id;
         messages = messages.filter(m => m.author.id === filterBy).array().slice(0, amount);
+        await message.channel.bulkDelete(messages).catch(error => console.log(error.stack));
+        await message.channel.send(`Deleted ${amount} messages from ${user}`).then(message => message.delete({ timeout: 10000 }));
         }
-        message.channel.bulkDelete(messages).catch(error => console.log(error.stack));
+        if(!user) {
+            if(isNaN(amount)) return message.reply('That doesn\'t seem like a number. Please enter a number.')
+            await message.channel.bulkDelete(amount).catch(error => console.log(error.stack));
+            await message.channel.send(`Deleted ${amount} messages`).then(message => message.delete({ timeout: 10000 }));
+        }
         });
         }catch(err){
             console.log(err);
