@@ -32,7 +32,7 @@ module.exports={
             }
         }catch(err){
             console.log(err);
-            return message.channel.send('Oops, looks like an error occured')
+            return message.channel.send('Looks like some error occured!!')
         }
     }
 }
