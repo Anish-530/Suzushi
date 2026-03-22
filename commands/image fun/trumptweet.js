@@ -5,7 +5,7 @@ module.exports={
     name: 'trumptweet',
     category: 'image fun',
     description: 'yes it\'s a trump tweet',
-    aliases: ['tt', 'trump'],
+    aliases: ['tt', 'trump', 'stupid'],
     usage: 'su trumptweet <text>',
     run: async(bot, message, args)=>{
         try {
